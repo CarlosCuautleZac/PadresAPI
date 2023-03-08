@@ -36,6 +36,18 @@ namespace PadresAPI.Controllers
             return Ok();
         }
 
+        [HttpGet("kardex/{idalumno:int}")]
+        public IActionResult GetKardex(int idalumno)
+        {
+            var alumno = repositoryAlumno.Get(idalumno);
+            if (alumno == null)
+                return NotFound();
+
+
+
+            return Ok();
+        }
+
         [Route("{id:int}")]
         [HttpGet]
         public IActionResult GetAlumnosByTutor(int id)
@@ -132,5 +144,7 @@ namespace PadresAPI.Controllers
                 return new List<AsingaturaDTO>();
 
         }
+
+
     }
 }
