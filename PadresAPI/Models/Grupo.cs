@@ -7,13 +7,11 @@ public partial class Grupo
 {
     public int Id { get; set; }
 
-    public int IdAlumno { get; set; }
+    public string Grado { get; set; } = null!;
 
-    public int IdDocente { get; set; }
+    public string Seccion { get; set; } = null!;
 
-    public string? Seccion { get; set; }
+    public virtual ICollection<Alumno> Alumnos { get; } = new List<Alumno>();
 
-    public virtual Alumno IdAlumnoNavigation { get; set; } = null!;
-
-    public virtual Docente IdDocenteNavigation { get; set; } = null!;
+    public virtual ICollection<DocenteGrupo> DocenteGrupos { get; } = new List<DocenteGrupo>();
 }

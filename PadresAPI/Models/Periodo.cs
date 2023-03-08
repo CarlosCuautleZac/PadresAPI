@@ -9,5 +9,9 @@ public partial class Periodo
 
     public short Año { get; set; }
 
-    public virtual ICollection<Calificacion> Calificacion { get; } = new List<Calificacion>();
+    public virtual ICollection<Calificacion> Calificacions { get; } = new List<Calificacion>();
+
+    public virtual ICollection<DocenteAlumno> DocenteAlumnos { get; } = new List<DocenteAlumno>();
+
+    public virtual ICollection<DocenteGrupo> DocenteGrupos { get; } = new List<DocenteGrupo>();
 }

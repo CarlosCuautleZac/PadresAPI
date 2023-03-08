@@ -13,9 +13,9 @@ public partial class Usuario
 
     public int Rol { get; set; }
 
-    public virtual ICollection<Director> Director { get; } = new List<Director>();
+    public virtual ICollection<Director> Directors { get; } = new List<Director>();
 
-    public virtual ICollection<Docente> Docente { get; } = new List<Docente>();
+    public virtual ICollection<Docente> Docentes { get; } = new List<Docente>();
 
-    public virtual ICollection<Tutor> Tutor { get; } = new List<Tutor>();
+    public virtual ICollection<Tutor> Tutors { get; } = new List<Tutor>();
 }

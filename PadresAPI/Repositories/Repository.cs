@@ -5,7 +5,7 @@ namespace PadresAPI.Repositories
 {
     public class Repository<T> where T : class
     {
-        public Sistem21PrimariaContext context { get; }
+        Sistem21PrimariaContext context { get; }
 
         public Repository(Sistem21PrimariaContext context)
         {
