@@ -53,24 +53,31 @@ namespace PadresAPI.Controllers
         public IActionResult GetAlumnosByTutor(int id)
         {
 
-            var alumnos = repository.Get().Include(x => x.IdAlumnoNavigation).Include(x => x.IdTutorNavigation).
+            try
+            {
+                var alumnos = repository.Get().Include(x => x.IdAlumnoNavigation).Include(x => x.IdTutorNavigation).
                 Include(x => x.IdAlumnoNavigation.IdGrupoNavigation).
                Where(x => x.IdTutor == id).ToList();
 
-            if (alumnos == null)
-                return NotFound();
+                if (alumnos == null)
+                    return NotFound();
 
-            List<AlumnoDTO> alumnoDTOs = alumnos.Select(x => new AlumnoDTO()
+                List<AlumnoDTO> alumnoDTOs = alumnos.Select(x => new AlumnoDTO()
+                {
+                    Id = x.IdAlumno,
+                    Nombre = x.IdAlumnoNavigation.Nombre,
+                    Grado = x.IdAlumnoNavigation.IdGrupoNavigation.Grado,
+                    Seccion = x.IdAlumnoNavigation.IdGrupoNavigation.Seccion,
+                    Asingaturas = GetAsignaturas(x.IdAlumno),
+                    Calificaciones = GetCalificaciones(x.IdAlumno),
+                }).ToList();
+
+                return Ok(alumnoDTOs);
+            }
+            catch(Exception ex)
             {
-                Id = x.IdAlumno,
-                Nombre = x.IdAlumnoNavigation.Nombre,
-                Grado = x.IdAlumnoNavigation.IdGrupoNavigation.Grado,
-                Seccion = x.IdAlumnoNavigation.IdGrupoNavigation.Seccion,
-                Asingaturas = GetAsignaturas(x.IdAlumno),
-                Calificaciones = GetCalificaciones(x.IdAlumno),
-            }).ToList();
-
-            return Ok(alumnoDTOs);
+                return BadRequest(ex.Message);
+            }
         }
 
         private List<CalificacionDTO> GetCalificaciones(int idAlumno)
