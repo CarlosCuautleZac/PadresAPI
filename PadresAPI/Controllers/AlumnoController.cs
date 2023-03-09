@@ -36,15 +36,13 @@ namespace PadresAPI.Controllers
             return Ok();
         }
 
+        //En pruebas
         [HttpGet("kardex/{idalumno:int}")]
         public IActionResult GetKardex(int idalumno)
         {
             var alumno = repositoryAlumno.Get(idalumno);
             if (alumno == null)
                 return NotFound();
-
-
-
             return Ok();
         }
 

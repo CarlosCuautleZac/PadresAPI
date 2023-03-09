@@ -13,17 +13,19 @@ namespace PadresAPI.Controllers
     [ApiController]
     public class UsuarioController : ControllerBase
     {
-        Repository<Usuario> repository;
+        Repository<Usuario> repositoryUsuario;
+        Repository<Tutor> repositoryTutor;
         public UsuarioController(Sistem21PrimariaContext context)
         {
-            repository = new(context);
+            repositoryUsuario = new(context);
+            repositoryTutor = new(context);
         }
 
         public IActionResult Get()
         {
             try
             {
-                var usuarios = repository.Get().Select(x => new UsuarioDTO()
+                var usuarios = repositoryUsuario.Get().Select(x => new UsuarioDTO()
                 {
                     NombreUsuario = x.Usuario1,
                     Password = x.Contraseña,
@@ -44,7 +46,7 @@ namespace PadresAPI.Controllers
         {
             try
             {
-                var u = repository.Get().FirstOrDefault(x => x.Usuario1.ToLower() == usuario.NombreUsuario.ToLower() &&
+                var u = repositoryUsuario.Get().FirstOrDefault(x => x.Usuario1.ToLower() == usuario.NombreUsuario.ToLower() &&
                 x.Contraseña == usuario.Password);
 
                 if (u != null)
@@ -55,6 +57,13 @@ namespace PadresAPI.Controllers
                         Password = u.Contraseña,
                         Rol = u.Rol
                     };
+
+                    var tutor = repositoryTutor.Get().FirstOrDefault(x => x.Idusuario == u.Id);
+
+                    if (tutor != null)
+                        usuarioencontrado.Id = tutor.Id;
+                    else
+                        return NotFound();
 
                     return Ok(usuarioencontrado);
                 }
