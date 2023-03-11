@@ -40,9 +40,10 @@ namespace PadresAPI.Controllers
             }
         }
 
-        [Route("login")]
-        [HttpPost]
-        public IActionResult Get(UsuarioDTO usuario)
+
+        //[Route("login")]
+        [HttpPost("login")]
+        public IActionResult GetUsuario([FromBody]UsuarioDTO usuario)
         {
             try
             {
@@ -76,7 +77,7 @@ namespace PadresAPI.Controllers
             }
         }
 
-        public static string CreateMD5(string input)
+        static string CreateMD5(string input)
         {
             // Use input string to calculate MD5 hash
             using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
