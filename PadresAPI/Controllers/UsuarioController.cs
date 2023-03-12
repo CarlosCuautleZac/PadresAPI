@@ -50,6 +50,8 @@ namespace PadresAPI.Controllers
                 var u = repositoryUsuario.Get().FirstOrDefault(x => x.Usuario1.ToLower() == usuario.NombreUsuario.ToLower() &&
                 x.Contraseña == usuario.Password);
 
+                
+
                 if (u != null)
                 {
                     UsuarioDTO usuarioencontrado = new UsuarioDTO()
@@ -64,12 +66,12 @@ namespace PadresAPI.Controllers
                     if (tutor != null)
                         usuarioencontrado.Id = tutor.Id;
                     else
-                        return NotFound();
+                        return NotFound("El sistema solo permite el inicio de sesión a tutores.");
 
                     return Ok(usuarioencontrado);
                 }
                 else
-                    return NotFound();
+                    return NotFound("Datos se sesión incorrectos");
             }
             catch (Exception ex)
             {
